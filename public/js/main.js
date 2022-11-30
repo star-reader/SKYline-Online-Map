@@ -1,6 +1,4 @@
 //SKYline天际模飞论坛连飞地图
-//前端UI主要来自开源地图FlightSimMap，核心JavaScript由SKYline管理组人员编写
-//加密的不是很牢固，想解密也能解开，看你自己了（反正这地图功能不强大解开也没用是不是...）
 
 function initMap() {
     time_is_widget.init({ UTC_za00: {} });
