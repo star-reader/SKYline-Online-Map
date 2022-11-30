@@ -1,0 +1,531 @@
+<!--DOCTYPE html-->
+<!--
+SKYline天际模飞俱乐部连飞地图
+由开源地图FlightSimMap制作
+-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>SKYline天际模飞俱乐部连飞地图|SKYline Online Map</title>
+  <link rel="shortcut icon" href="public/img/logo.jpg" />
+  <script src="jquery/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" /> -->
+  <link rel="stylesheet" href="public/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
+  <script src="//widget.time.is/t.js"></script>
+  <script src="public/js/main.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css" />
+  <link rel="stylesheet" href="public/main.css" />
+  <link rel="stylesheet" href="public/my.css" />
+  <link rel="stylesheet" href="flight/flight.css">
+  <link rel="stylesheet" href="atc/atc.css">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, max-age=0, must-revalidate">
+  
+</head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-layout-dark" style="background-color: rgb(32,36,63);overflow: hidden;"
+  onload="initMap()">
+  <div class="mdui-appbar mdui-appbar-fixed" style="background-color: rgb(32,36,63);">
+    <div class="mdui-toolbar mdui-color-indigo">
+      <a href="javascript:;" class="mdui-typo-headline">SKYline天际模飞论坛连飞地图</a>
+      <a href="https://bbs.skylineflyleague.cn/" class="mdui-btn mdui-typo-title" style="font-size: 20px;">访问论坛</a>
+      <a href="https://pilot.skylineflyleague.cn/public/" class="mdui-btn mdui-typo-title"
+        style="font-size: 20px;">飞行员中心</a>
+      <a href="https://jq.qq.com/?_wv=1027&k=2tRA9PLx" class="mdui-btn mdui-typo-title"
+        style="font-size: 20px;">官方QQ群</a>
+      <a href="https://skylineflyleague.cn/" class="mdui-btn mdui-typo-title" style="font-size: 20px;">门户</a>
+      <div class="mdui-toolbar-spacer"></div>
+      <!-- <a href="/street/" class="mdui-btn mdui-typo-title">街区图</a> -->
+      <a href="javascript:void(0)" onclick="OpenOnline();" class="mdui-btn mdui-typo-title">在线列表</a>
+      <a href="javascript:void(0)" onclick="OpenAbout();" id="test" class="mdui-btn mdui-typo-title">关于</a>
+      <a href="https://time.is/UTC" id="time_is_link" rel="nofollow" class="mdui-btn mdui-typo-title">UTC: <span
+          id="UTC_za00"></span> Z</a>
+    </div>
+  </div>
+  <script>
+    function ShowMapType() {
+      document.getElementById('maptype').style.display = 'block';
+    }
+  </script>
+
+  <div id="leaflet-container"></div>
+  <div id="AirlineListOverlay" class="airline-list-overlay info-overlay-showing " style="z-index:88888">
+    <div class="airline-list-title" style="background-color: #f5f5f5">
+      <div class="airline-list-title-text" style="text-align: center;">
+        <span class="mdui mdui-format-list-bulleted-square" style="text-align: center;">在线列表|Online List</span>
+
+      </div>
+    </div>
+    <div class="mdui-tab mdui-color-grey-800 mdui-tab-full-width" mdui-tab="">
+      <a id="AirlineNumTab" href="#AirlineOnline" class="mdui-ripple mdui-tab-active"
+        style="background-color:rgb(32,36,63) ">机组 | PILOT</a>
+      <a id="ATCNumTab" href="#ATCOnline" class="mdui-ripple" style="background-color:rgb(32,36,63)">管制 | ATC</a>
+
+    </div>
+
+    <div id="AirlineOnline" class="mdui-p-a-2 airline-list-table" style="padding: 0px !important;display: none;">
+      <table class="table table-hover" style="cursor: pointer;">
+        <tbody>
+          <tr class="thead-light">
+            <th>呼号</th>
+            <th>起飞</th>
+            <th>落地</th>
+          </tr>
+        </tbody>
+        <tbody id="AirlineTable"></tbody>
+      </table>
+    </div>
+
+    <div id="ATCOnline" class="mdui-p-a-2 airline-list-table" style="padding: 0px !important; display: none;">
+      <table class="table table-hover" style="cursor: pointer;">
+        <tbody>
+          <tr class="thead-light">
+            <th>席位</th>
+            <th>频率</th>
+            <th>管制</th>
+          </tr>
+        </tbody>
+        <tbody id="ATCTable"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="about" id="about">
+
+    <h2 style="text-align: center;font-weight:500;">关于连飞地图 | About Map</h2>
+    <h3 style="text-align: center;font-weight: 500;">SKYline天际模飞俱乐部连飞地图</h3>
+    <h3>——技术支持</h3>
+    <h3 style="font-weight: 500;">· SKYline技术开发组</h3>
+    <h3 style="font-weight: 500;">· 开源地图：FlightSimMap</h3>
+    <h3 style="font-weight: 500;">· ArcGIS</h3>
+    <br />
+    <h3>——更新日志</h3>
+    <h3 style="font-weight: 700;">v3.2.0 2022.2.23</h3>
+    <h3 style="font-weight: 500;">·修改机组标牌样式、管制员信息预览、新增区调边界显示、新增特情飞机跟踪、取消街区图支持</h3>
+    <h3 style="font-weight: 700;">v3.1.3 2022.2.20</h3>
+    <h3 style="font-weight: 500;">·更新机组数据刷新频率、修复机组航迹显示bug</h3>
+    <h3 style="font-weight: 700;">v3.1.2 2022.2.18</h3>
+    <h3 style="font-weight: 500;">·修改默认地图样式、增加ATC边界显示、导航数据显示功能</h3>
+    <h3 style="font-weight: 700;">v3.1.1 2022.2.3</h3>
+    <h3 style="font-weight: 500;">·切换地图图源为ArcGIS、修复机组航迹显示的一些bug</h3>
+    <h3 style="font-weight: 700;">v3.1.0 2022.2.2</h3>
+    <h3 style="font-weight: 500;">·增加机组历史航迹显示与跟踪功能</h3>
+    <h3 style="font-weight: 700;">v3.0.0 2022.1.29</h3>
+    <h3 style="font-weight: 500;">·修复机组航向显示问题、更新管制半径显示、调整界面布局</h3>
+    <h3 style="font-weight: 700;">v2.0.0 2022.1.26</h3>
+    <h3 style="font-weight: 500;">·切换地图图源、修正管制员半径、更新机组标牌、优化性能</h3>
+    <h3 style="font-weight: 700;">v1.2.2 2022-1-23</h3>
+    <h3 style="font-weight: 500;">·新增显示飞行员编号显示，bug修复</h3>
+    <h3 style="font-weight: 700;">v1.2.1 2022-1-19</h3>
+    <h3 style="font-weight: 500;">·修正地图刷新时机组丢失问题、修正缓存问题</h3>
+    <h3 style="font-weight: 700;">v1.2.0 2022-1-14</h3>
+    <h3 style="font-weight: 500;">·增加机组和管制员详细标牌，更新UI设置</h3>
+    <h3 style="font-weight: 700;">v1.1.0 2021-7-5</h3>
+    <h3 style="font-weight: 500;">·首个公开发行的版本</h3>
+    <h3 style="font-weight: 700;">v1.0.0 2021-6-20</h3>
+    <h3 style="font-weight: 500;">·首个试运行版本</h3>
+
+  </div>
+  <script>
+    function OpenOnline() {
+      undefined
+      var div1 = document.getElementById("AirlineListOverlay");
+      if (div1.style.display == 'block') div1.style.display = 'none';
+      else div1.style.display = 'block';
+    };
+    function OpenAbout() {
+      undefined
+      var div2 = document.getElementById("about");
+      var div3 = document.getElementById('abouttext');
+      if (div2.style.display == 'block') div2.style.display = 'none';
+      else div2.style.display = 'block'; div3.style.display = 'block'
+    }
+  </script>
+  <!------------机组详细信息标牌----------->
+  <div class="sidebar" id="sidebar">
+    <div class="top-info">
+      <span class="info">
+        <span onclick="closesidebar()" class="click-expand-fold"><img src="flight/close.svg" class="expand-fold-button"
+            style="float:right;width: 30px;"></span>
+        <br>
+        <!--航班号更改变量，航空公司与呼号进行匹配-->
+        <span id="callsign-top"
+          style="font-size:25px;color: orange;font-weight: bold;">&nbsp;&nbsp;&nbsp;MU6189&nbsp;/&nbsp;CES6189</span>
+        <br>
+        <span id="airline-1" style="font-size:18px;">&nbsp;&nbsp;&nbsp;中国东方航空|China Eastern Airlines</span>
+        <span id="airline-pic"><img src="flight/skyline.png" style="position: absolute;left: 200px;width: 50px;"></span>
+      </span>
+      <br><br>
+      <div class="image" id="image" title="图片均来自模拟飞行截图或已授权使用的拍摄图片"><img src="flight/skyline.png" width="100%"></div>
+      <div class="apts">
+        <!--获取whazzup的信息-->
+        <span style="font-size:26px;padding-left:45px;">起飞 |
+          DEP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;到达 | ARR</span>
+        <br>
+        <div id="dep-arr" style="padding-left:35px;text-align:center;font-weight: bold;">ZBAA&nbsp;&nbsp;<img
+            width="50px" style="position: relative;top: 30px;" src="flight/direct.svg">&nbsp;&nbsp;ZGGG</div>
+      </div>
+      <br><br>
+      <hr>
+      <br>
+      <div class="est">
+        <br>
+        <div id="depname" style="width: 190px;text-align: center; float: left;padding-left: 5px;">北京/首都</div>
+        <div id="arrname" style="width: 190px;text-align: center; float:right;padding-right: 5px;">海口/美兰&nbsp;&nbsp;
+        </div>
+      </div>
+      <br>
+      <!--进度条预留-->
+      <div class="line">
+
+      </div>
+    </div>
+    <div class="slider">
+      <div class="separate" id="a">
+        <br>
+        <!--  CES6189变量需要修改       -->
+        <img src="flight/info.svg" style="position:absolute; margin:0 5px;width: 40px;"><span id="callsign-2"
+          style="color:white;padding-left: 70px; font-size:20px;text-indent:3px;line-height:20px;">&nbsp;航班 CES6189
+          的更多信息 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; More CES6189
+          Information</span>
+      </div>
+      <div id="info-all">
+        <div class="table-content">
+          <table>
+            <tr>
+              <td>
+                <span class="row-main">
+                  <br>
+                  <span style="color:rgb(107, 107, 107);font-size:20px;">机型 | AIRCRAFT TYPE</span>
+                  <br>
+                  <span id="type" style="line-height:50px;font-size:25px;">Boeing 737-800</span>
+                  <br><br>
+                </span>
+                <br>
+                <!--在这里添加span制作行-->
+                <span class="row-second">
+                  <br><br>
+                  <span style="color:rgb(107, 107, 107);font-size:20px;">航空公司 | AIRLINES</span>
+                  <br>
+                  <span id="airline-2" style="line-height:50px;font-size:25px;">中国东方航空</span>
+                </span>
+                <br><br>
+                <span class="row-second">
+                  <br><br><br><br>
+                  <span style="color:rgb(107, 107, 107);font-size:20px;line-height:20px;">飞行员编号 | PILOT NUMBER</span>
+                  <br>
+                  <span id="cid" style="line-height:50px;font-size:25px;">6189</span>
+                </span>
+              </td>
+              <td>
+                <img src="flight/icon-aircraft.svg"
+                  style="position: absolute;padding-left: 0; top:0px; margin-left: -5px; width:60px;z-index:999;">
+              </td>
+            </tr>
+          </table>
+        </div>
+        <br><br>
+        <!-- <div class="closediv" onclick="closediv()">
+          <input type="image" class="closediv-button" src="closediv.svg">
+      </div> -->
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+      <div class="separate" id="b">
+        <br><br><br><br>
+        <!--  CES6189变量需要修改       -->
+        <img src="flight/route.svg" style="position: absolute;top: 8px; margin:0 5px;width: 40px;"><span
+          style="position: relative; top: -15px; color:white;padding-left: 70px; font-size:20px;text-indent:3px;line-height:20px;z-index: 9999 !important;">&nbsp;飞行状态详情<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Detail Flight Status</span>
+      </div>
+      <div class="table-content-distance">
+        <table>
+          <tr>
+            <td>
+
+              <br><br>
+              <span class="row-second">
+                <br><br>
+                <span style="color:rgb(107, 107, 107);font-size:20px;">高度 | CALIBRATED ALTITUDE</span>
+
+                <span id="alt" style="line-height:50px;font-size:25px;">33100 ft</span>
+              </span>
+              <br>
+              <span class="row-second">
+                <br><br><br><br>
+                <span style="color:rgb(107, 107, 107);font-size:20px;line-height:30px;">航迹 | TRACK</span>
+                <br>
+                <span id="track" style="line-height:50px;font-size:25px;">312°</span>
+              </span>
+              <br><br>
+              <span class="row-second">
+                <br><br><br><br><br>
+                <span style="color:rgb(107, 107, 107);font-size:20px;line-height:30px;">纬度 | LATITUDE</span>
+                <br>
+                <span id="lat" style="line-height:50px;font-size:25px;">32.4577</span>
+              </span>
+              <br><br><br></br>
+              <span class="row-second">
+                <br><br><br><br><br>
+                <span style="color:rgb(107, 107, 107);font-size:20px;line-height:30px;">经度 | LONGITUDE</span>
+                <br>
+                <span id="long" style="line-height:50px;font-size:25px;">118.224774</span>
+              </span>
+              <br><br><br><br>
+              <span class="row-second">
+                <br><br><br><br><br>
+                <span style="color:rgb(107, 107, 107);font-size:20px;line-height:30px;">地速 | GROUND SPEED</span>
+                <br>
+                <span id="gs" style="line-height:50px;font-size:25px;">450</span>
+              </span>
+              <br><br><br><br>
+              <span class="row-second">
+                <br><br><br><br><br>
+                <span style="color:rgb(107, 107, 107);font-size:20px;line-height:30px;">应答机 | SQUAWK</span>
+                <br>
+                <span id="squawk" style="line-height:50px;font-size:25px;">7700</span>
+              </span>
+              <br><br>
+            </td>
+            <td>
+              <img src="flight/airway.svg"
+                style="position:absolute;top:140px;color: black; margin-left:-5px; width:60px;z-index:999;">
+            </td>
+          </tr>
+          <br>
+        </table>
+      </div>
+
+      <div class="separate" id="c">
+        <!--  CES6189变量需要修改       -->
+        <img src="flight/route.svg" style="position: absolute;top: 8px; margin:0 5px; width: 40px;"><span
+          style="position: relative;top: -15px; color:white;padding-left: 70px; font-size:20px;text-indent:3px;line-height:20px;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          预计航路<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flight Planned
+          Route</span>
+      </div>
+      <br>
+      <span id="route"
+        style="position: relative;top: 230px;height:50px; color:black;line-height:30px;font-size:25px;">RUSDO W45 ML
+        W118 ONIXO W37 HOK A461 LIG R473 BEMAG V5 ATAGA GIVIL HK411 HK413 HK513 GIVIL HK411 HK413 HK513</span>
+      <br>
+      <!-- <div class="separate" id="d">
+        <br>
+        <img src="info.svg" style="position:absolute; margin:0 5px;width: 40px;"><span id="callsign-2"
+          style="color:white;padding-left: 70px; font-size:20px;text-indent:3px;line-height:20px;">&nbsp;飞行数据信息
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flight Data
+          Information</span>
+        <div class="altdata" id="altdata">
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="areaChart"
+                style="min-height: 150px; height: 150px; max-height: 150px; max-width: 100%;"></canvas>
+            </div>
+          </div>
+          <script>
+           $(function () {
+              var areaChartCanvas = $('#areaChart').get(0).getContext('2d');
+              var areaChartData = {
+                labels: ['10:20', '10.23', '10.26', '10:20', '10.23', '10.26'],
+                datasets: [
+                  {
+                    label: 'Digital Goods',
+                    backgroundColor: 'rgba(97,198,147,0.8)',
+                    borderColor: 'rgba(97,198,147,0.6)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(97,198,147,0.7)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(97,198,147,0.7)',
+                    data: [150,6500,18540,27000,32100,32100]
+                  },
+                 {
+                    label: 'Electronics',
+                    backgroundColor: 'rgba(3,169,244, 0.8)',
+                    borderColor: 'rgba(3,169,244, 0.6)',
+                    pointRadius: false,
+                    pointColor: 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor: '#c1c7d1',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data: [0,17500,21000,28000,35000,42000]
+                  },
+                ]
+              }
+
+              var areaChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                  display: false
+                },
+                scales: {
+                  xAxes: [{
+                    gridLines: {
+                      display: false,
+                    }
+                  }],
+                  yAxes: [{
+                    gridLines: {
+                      display: false,
+                    }
+                  }]
+                }
+              }
+
+              // This will get the first returned node in the jQuery collection.
+              new Chart(areaChartCanvas, {
+                type: 'line',
+                data: areaChartData,
+                options: areaChartOptions
+              })
+
+            })
+          </script>
+
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <!------------管制员详细信息------------>
+  <div class="ui-widget-content atc-frame" id="atclist" onmousedown="mouseDown()" onmouseup="mouseUp()" >
+    <div class="filter"></div>
+    <div class="top-frame">
+      <a href="javascript:void(0)" onclick="CloseATCinfo();"><img src="atc/close.svg" width="23px" height="23px" style="float:right;"></a>
+      <span class="ATC-CALL" id="callsign-atc1">&nbsp;&nbsp;ZAK_E_FSS</span>
+      <span class="online" id="data-1" >Chris Zhang&nbsp;|&nbsp;<span class="further-info"
+      onclick="show_atc_info()">ATC6189</span>&nbsp;|&nbsp;SKYLINE</span>
+    </div>
+    <div class="content-header">
+      <span class="type">
+        <span id="atc-type" class="text">FSS</span>
+        <br>
+        <span class="subtext">&nbsp;席位类型</span>
+      </span>
+      <span class="frequency">
+        <span id="frequency" class="text">131.175</span>
+        <br>
+        <span class="subtext">&nbsp;频率</span>
+      </span>
+      <span class="range">
+        <span id="range" class="text">1500nm</span>
+        <br>
+        <span class="subtext">&nbsp;管制范围</span>
+      </span>
+    </div>
+    <div class="notam">
+      <div id="notam" class="notam-text">
+        ZAK_E_FSS<br>
+        CPDLC @ KZAK
+        Does not cover PHZH/HCF
+        This is a non-radar environment. Position reports required at each fix. Please
+        report as follows Callsign, last fix and time crossed, flight level, estimated next
+        fix and time, then next fix, mach number, ground speed. All aircraft squawk
+        2000 while in Oceanic airspace.
+      </div>
+    </div>
+  </div>
+  <div class="atc-info" id="info2">
+    <div class="top-frame" style="height:54px;">
+      <a href="javascript:void(0)" onclick="CloseDetail();"><img src="/atc/close.svg" width="23px" height="23px" style="float:right;"></a>
+        <span id="detail-1" class="text">&nbsp;&nbsp;ATC6189</span>
+        <br>
+        <span class="subtext" style="font-size:17px;">&nbsp;&nbsp;管制员详情 | Controller Detail</span>
+    </div>
+    <div class="main-content">
+        <span class="submodule">
+            <span class="text">&nbsp;&nbsp;所属组织 | Organization</span>
+            <br>
+            <span class="subinfo">&nbsp;&nbsp;&nbsp;SKYline ATC Center</span>
+            <br>
+        </span>
+        <div class="seperate"></div>
+        <span class="submodule">
+          <span class="text">&nbsp;&nbsp;管制等级 | Rating</span>
+          <br>
+          <span id="detail-rating" class="subinfo">&nbsp;&nbsp;&nbsp;SKYLINE ATC</span>
+          <br>
+      </span>
+      <div class="seperate"></div>
+      <span class="submodule">
+        <span class="text">&nbsp;&nbsp;管制员编号 | Controller Number</span>
+        <br>
+        <span id="detail-cid" class="subinfo">&nbsp;&nbsp;&nbsp;SKYLINE ATC</span>
+        <br>
+    </span>
+    <div class="seperate"></div>
+    <span class="submodule">
+      <span  class="text">&nbsp;&nbsp;席位呼号 | Callsign</span>
+      <br>
+      <span id="detail-callsign" class="subinfo">&nbsp;&nbsp;&nbsp;SKYLINE ATC</span>
+      <br>
+  </span>
+  <div class="seperate"></div>
+  <span class="submodule">
+    <span  class="text">&nbsp;&nbsp;席位类型 | Type</span>
+    <br>
+    <span id="detail-type" class="subinfo">&nbsp;&nbsp;&nbsp;SKYLINE ATC</span>
+    <br>
+</span>
+    </div>
+</div>
+<script>
+
+    function show_atc_info() {
+      // document.getElementById('info2').style.display = 'block';
+      document.getElementById('info2').style.display = 'block';
+    };
+    function CloseDetail(){
+      document.getElementById('info2').style.display = 'none';
+    };
+    function CloseATCinfo(){
+      document.getElementById('atclist').style.display = 'none';
+    };
+</script>
+  <script>
+    function closesidebar() {
+      var sidebar = document.getElementById('sidebar');
+      sidebar.style.display = "none";
+    }
+  </script>
+  <!-- 让管制员列表可以拖动 -->
+   <script type="text/javascript">
+
+    //以下属性先不用管，等我们在下面定义方法的时候，需要用到什么属性，在来定义全局变量（属性）就可以了
+    var startX;
+    var startY;
+    var moveSwitch = false;
+    var currentLeft;
+    var currentTop;
+    var loginTag = document.getElementById("atclist");
+
+
+    document.onmousemove = function (e) {//定义一个方法，用来捕捉鼠标的坐标位置
+      if (moveSwitch) {//类似于if(true);　　　　　　　　　　　　　　　
+        var x = e.clientX;//e.clientX是一个触摸事件，即是鼠标点击时的X轴上的坐标
+        var y = e.clientY;//e.clientY是一个触摸事件，即是鼠标点击时的Y轴上的坐标
+        var distanceX = x - startX;//X轴上获得移动的实际距离
+        var distanceY = y - startY;//Y轴上获得移动的实际距离
+        loginTag.style.left = (distanceX + currentLeft) + "px";//currentLeft下面的方法会有解释，需要注意最后要添加PX单位，如果给left赋值会破坏文档流，不加单位就会无效
+        loginTag.style.top = (distanceY + currentTop) + "px";//
+      }
+    }
+
+    function mouseDown(e) {//鼠标按下事件
+      e = e ? e : window.event;//因为兼容问题，event可能在隐藏参数中，如果隐藏参数没有event事件，则可以使用全局的事件window.event（大家记住写法就可以了）
+      moveSwitch = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      currentLeft = loginTag.offsetLeft;//通过对象获取对象的坐标
+      currentTop = loginTag.offsetTop;
+    }
+    function mouseUp() {
+      moveSwitch = false;
+    }
+  </script>
+  <script id="route"></script>
+</body>
+
+</html>

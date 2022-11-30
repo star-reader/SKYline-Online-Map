@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6,user-scalable=no">
+    <link rel="stylesheet" href="flight.css">
+    <title>TEST</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="top-info">
+            <span class="info">
+                <span class="click-expand-fold"><img src="close.svg" class="expand-fold-button" style="float:right;"></span>
+                <br>
+            <!--航班号更改变量，航空公司与呼号进行匹配-->
+                <span class="flight">&nbsp;&nbsp;&nbsp;MU6189&nbsp;/&nbsp;</span><span style="font-size:25px;">CES6189</span></span>
+                <br>
+                <span style="font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;China Eastern Airlines</span>
+            </span>
+        <br><br>
+        <div class="image"><img src="background2.jpg" height="100%" width="100%"></div>
+        <div class="apts">
+        <!--获取whazzup的信息-->
+            <span style="font-size:40px;padding-left:120px;">Departure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrival</span>
+            <br><br>
+            <div style="text-align:center;">ZBAA&nbsp;&nbsp;&nbsp;<img src="direct.svg">&nbsp;&nbsp;&nbsp;ZGGG</div>
+        </div>
+        <br><br>
+        <hr>
+        <br>
+        <div class="est">
+            <br>
+            &nbsp;&nbsp;ACTUAL:UTC00:01<span style="float:right;">ESTIMATE:UTC03:32&nbsp;&nbsp;</span>
+        </div>
+        <br>
+        <!--进度条预留-->
+        <div class="line">
+
+        </div>
+    <div class="slider">
+        <div class="separate">
+            <br>
+      <!--  CES6189变量需要修改       -->
+            <img src="info.svg" style="margin:0 auto;"><span style="color:white;font-size:40px;text-indent:3px;line-height:20px;">&nbsp;More CES6189 Information</span><input id="click-button" onclick="showbar()" type="image" src="open.svg" class="button-extend">  <!--<img class="button-extend" src="open.svg" style="float:right;">-->
+        </div>
+    <div id="info-all">    
+        <div class="table-content">
+            <table>
+                <tr>
+                    <td>
+                        <span class="row-main">
+                            <br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;">TYPE</span>
+                            <br>
+                            <span style="line-height:80px;font-size:35px;">Boeing 737-800</span>
+                        </span>
+                        <br><br>
+                        <!--在这里添加span制作行-->
+                        <span class="row-second">
+                            <br><br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;">AIRLINE</span>
+                            <br>
+                            <span style="line-height:50px;font-size:35px;">China Eastern Airlines</span>
+                        </span>
+                        <br><br>
+                        <span class="row-second">
+                            <br><br><br><br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;line-height:30px;">PILOT NUMBER</span>
+                            <br>
+                            <span style="line-height:50px;font-size:35px;">6189</span>
+                        </span>
+                    </td>
+                    <td>
+                        <img src="icon-aircraft.svg" style="height:100px;width:150px;z-index:0;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br><br>
+        <div class="closediv" onclick="closediv()">
+            <input type="image" class="closediv-button" src="closediv.svg">
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+    </div>
+        <div class="separate">
+            <br><br><br><br>
+        <!--  CES6189变量需要修改       -->
+            <!-- <img src="route.svg" style="margin:0 auto;">--><span style="color:white;font-size:40px;text-indent:3px;line-height:20px;">&nbsp;Detail Flight Status</span><input id="click-button" onclick="showbar()" type="image" src="open.svg" class="button-extend"> 
+        </div>
+         <div class="table-content-distance">
+            <table>
+                <tr>
+                    <td>
+                        <span class="row-main-distance">
+                            <br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;">DISTANCE REMAIN</span>
+                            <br><br><br>
+                            <span style="line-height:45px;font-size:35px;"><!--RUSDO W45 ML W118 ONIXO W37 HOK A461 LIG R473 BEMAG V5 ATAGA-->N/A</span>
+                        </span>
+                        <br><br>
+                        <span class="row-second">
+                            <br><br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;">CALIBRATED ALTITUDE</span>
+                            <br>
+                            <span style="line-height:50px;font-size:35px;">33,100 ft</span>
+                        </span>
+                        <br><br>
+                        <span class="row-second">
+                            <br><br><br><br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;line-height:30px;">TRACK</span>
+                            <br>
+                            <span style="line-height:50px;font-size:35px;">312°</span>
+                        </span>
+                        <br><br><br>
+                        <span class="row-second">
+                            <br><br><br><br><br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;line-height:30px;">LONGITUDE</span>
+                            <br>
+                            <span style="line-height:50px;font-size:35px;">N/A</span>
+                        </span>
+                        <br><br><br><br>
+                        <span class="row-second">
+                            <br><br><br><br><br>
+                            <span style="color:rgb(107, 107, 107);font-size:25px;line-height:30px;">LATITUDE</span>
+                            <br>
+                            <span style="line-height:50px;font-size:35px;">N/A</span>
+                        </span>
+                    </td>
+                    <td>
+                        <img src="airway.svg" style="height:100px;width:150px;z-index:0;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="separate">
+        <!--  CES6189变量需要修改       -->
+            <!-- <img src="route.svg" style="margin:0 auto;">--><span style="color:white;font-size:40px;text-indent:3px;line-height:23px;"><br>&nbsp;Flight Planned Route</span><img src="open.svg" class="button-extend" style="float:right;"> 
+        </div>
+        <br>
+        <span style="color:black;line-height:50px;font-size:35px;">RUSDO W45 ML W118 ONIXO W37 HOK A461 LIG R473 BEMAG V5 ATAGA</span>
+        <br><br><br><br><br>
+    </div>
+    </div>
+    </div>
+    <script>
+        var infobar = document.getElementById("info-all")
+        function showbar(){
+            infobar.style.display="block";
+            infobar.style.transition=".5s";
+        }
+        function closediv(){
+            infobar.style.display="none";
+            infobar.style.transition=".5s";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+/* body{
+    background-image: url(/background2.jpg);
+} */
+
+@font-face {
+    font-family:default-font;
+    src: url(7Auwp_0qiz-afTLGLQ.woff2);
+}
+
+.atc-frame{
+    position:absolute;
+    /* border-radius: 10px; */
+    /* box-shadow: #9d9d9d 2px 2px; */
+    display:none;
+    font-family: default-font;
+    width:430px;
+    height:160px;
+    background-color:#d5d5d5d9;
+    top:80px;
+    left:420px;
+    z-index: 9999;
+    cursor: move;
+}
+
+.top-frame{
+    height:85px;
+    width:100%;
+    background-color:#9f9f9f;
+}
+
+.top-frame img{
+    cursor:pointer;
+}
+
+.ATC-CALL{
+    display: block;
+    color:#ffffff;
+    font-size:35px;
+    text-align: center;
+}
+
+.online{
+    position: relative;
+    display: block;
+    top:8px;
+    color:#dddddd;
+    text-align: center;
+    font-size: 15px;
+}
+
+.further-info{
+    text-decoration:dashed;
+    border-bottom: #dddddd 1px dotted;
+}
+
+.further-info:hover{
+    color:#ffffff;
+    border-bottom: #ffffff 1px dotted;
+    cursor:pointer;
+}
+
+.content-header{
+    position: inherit;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.type,.frequency,.range{
+    position: relative;
+    left:30px;
+    width:130px;
+}
+
+.text{
+    color:#847272;
+    font-size: 21px;
+    text-align: center;
+}
+
+.subtext{
+    font-size: 13px;
+}
+
+.notam{
+    display: block;
+    position: inherit;
+    height:auto;
+    background-color: #d5d5d5d9;
+    width:100%;
+    margin-top:75px;
+}
+
+.notam-text{
+    display: block;
+    position: relative;
+    color:#626161;
+    left:28px;
+    padding-bottom: 30px;
+    max-width: 370px;
+    line-height:25px;
+    font-size:16px;
+}
+
+.atc-info{
+    display: none;
+    font-family: default-font;
+    position:absolute;
+    z-index:10000;
+    height:380px;
+    width: 430px;
+    background-color: #d5d5d5f3;
+    top:80px;
+    left:420px;
+}
+
+.main-content{
+    display: inline;
+    position: relative;
+    top:10px;
+}
+
+.submodule{
+    position: relative;
+    height:50px;
+    top: 10px;
+}
+
+.subinfo{
+    display: block;
+    position: relative;
+    top:8px;
+    font-size: 17px;
+}
+
+.seperate{
+    position: relative;
+    height:1.5px;
+    width:54%;
+    left:10px;
+    background-color: #e7e1e1;
+    text-align: center;
+}

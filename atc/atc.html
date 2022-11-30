@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="atc.css">
+    <title>ATC INFO DEMO</title>
+</head>
+
+<body>
+    <div class="atc-frame">
+        <div class="filter"></div>
+        <div class="top-frame">
+            <img src="close.svg" width="23px" height="23px" style="float:right;">
+            <span class="ATC-CALL">&nbsp;&nbsp;ZAK_E_FSS</span>
+            <span class="online">Chris Zhang&nbsp;|&nbsp;<span class="further-info"
+                    onclick="show_atc_info()">ATC6189</span>&nbsp;|&nbsp;SKYLINE</span>
+        </div>
+        <div class="content-header">
+            <span class="type">
+                <span class="text">FSS</span>
+                <br>
+                <span class="subtext">&nbsp;席位类型</span>
+            </span>
+            <span class="frequency">
+                <span class="text">131.175</span>
+                <br>
+                <span class="subtext">&nbsp;频率</span>
+            </span>
+            <span class="range">
+                <span class="text">1500nm</span>
+                <br>
+                <span class="subtext">&nbsp;管制范围</span>
+            </span>
+        </div>
+        <div class="notam">
+            <div class="notam-text">
+                ZAK_E_FSS
+                CPDLC @ KZAK
+                Does not cover PHZH/HCF
+                This is a non-radar environment. Position reports required at each fix. Please
+                report as follows Callsign, last fix and time crossed, flight level, estimated next
+                fix and time, then next fix, mach number, ground speed. All aircraft squawk
+                2000 while in Oceanic airspace.
+            </div>
+        </div>
+    </div>
+    <!-- 管制员信息明天写，困死我了 -->
+    <div class="atc-info">
+        <div class="top-frame" style="height:54px;">
+            <img src="/atc-list-demo/close.svg" width="23px" height="23px" style="float:right;">
+            <span class="text">&nbsp;&nbsp;ATC6189</span>
+            <br>
+            <span class="subtext" style="font-size:17px;">&nbsp;&nbsp;Certificate Details</span>
+        </div>
+        <div class="main-content">
+            <span class="submodule">
+                <span class="text">&nbsp;&nbsp;所属组织 | Organization</span>
+                <br>
+                <span class="subinfo">&nbsp;&nbsp;&nbsp;SKYLINE ATC</span>
+                <br>
+            </span>
+            <div class="seperate"></div>
+            <span class="submodule">
+                <span class="text">&nbsp;&nbsp;管制等级 | Rating</span>
+            </span>
+        </div>
+    </div>
+    <script>
+
+        function show_atc_info() {
+
+        }
+    </script>
+</body>
+
+</html>
