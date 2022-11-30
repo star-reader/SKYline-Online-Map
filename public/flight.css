@@ -1,0 +1,159 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.sidebar{
+    position:absolute;
+    float:left;
+    overflow:auto;
+    overflow-x:hidden;
+    width:780px;
+    height:100%;
+    background-color:#dddddd;
+}
+
+.top-info{
+    position:absolute;
+    width:100%;
+    line-height:25px;
+    text-indent:2px;
+    height:100px;
+    color:#ffffff;
+    font-size:30px;
+    background-color:#444444;
+}
+
+.image{
+    display:block;
+    position:absolute;
+    height:400px;
+    width:100%;
+}
+
+.apts{
+    position:relative;
+    color:black;
+    margin-top:58%;
+    font-size:70px;
+}
+
+.est{
+    color:rgb(107, 107, 107);
+}
+
+.dep-arr-sign{
+    font-size:35px;
+}
+
+.expand-fold-button{
+    display:block;
+    cursor:pointer;
+}
+
+.expand-fold-button:hover{
+    transform:rotate(360deg);
+    transition:all .5s;
+}
+
+.separate{
+    margin-top:0px;
+    line-height:5px;
+    height:70px;
+    width:100%;
+    background-color:#1178ee;
+}
+
+.table-content{
+    display:block;
+    position:relative;
+    max-height:100px;
+    width:100%;
+}
+
+.table-content table{
+    display:block;
+    z-index:2;
+    height:310px;
+    width:20%;
+    border-right:6px #ffffff solid;
+}
+
+.row-main{
+    position:absolute;
+    line-height:7px;
+    width:70%;
+    height:87px;
+    color:black;
+    border-bottom:4px #ffffff solid;
+    margin-left:170px;
+}
+
+.row-second{
+    position:absolute;
+    line-height:29px;
+    margin-left:170px;
+    /* height:px; */
+    color:black;
+}
+
+.row-main-distance{
+    position:absolute;
+    line-height:10px;
+    width:70%;
+    height:px;
+    color:black;
+    border-bottom:4px #ffffff solid;
+    margin-left:170px;
+}
+
+.table-content-distance table{
+    display:block;
+    z-index:2;
+    height:509px;
+    width:20%;
+    border-right:6px #ffffff solid;
+}
+
+/* .button-extend{
+    position:relative;
+    cursor:pointer;
+    transform:rotate(90deg);
+    transition:all .5s;
+}
+
+.button-extend:hover{
+    transform:rotate(0deg);
+    transition:all .5s;
+}
+
+.button-extend:focus .table-content{
+    display:block;
+} */
+
+.button-extend{
+    display:block;
+    float:right;
+    transform:rotate(90deg);
+    transition:.5s;
+}
+
+.button-extend:hover{
+    transform:rotate(0deg);
+    transition:.5s;
+}
+
+.closediv{
+    display:block;
+    position:absolute;
+    cursor:pointer;
+    background-color:#dddddd;
+    width:100%;
+    text-align:center;
+    height:60px;
+    top:1200px;
+}
+
+.closediv:hover{
+    background-color:#9c9898;
+}

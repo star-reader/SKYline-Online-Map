@@ -1,0 +1,25 @@
+/* @font-face {font-family: 'Alibaba-PuHuiTi';src: local('Alibaba-PuHuiTi'), local('Alibaba-PuHuiTi'), url('https://cdn.jsdelivr.net/gh/hahaDashen/Fonts@master/Alibaba-PuHuiTi-Medium.ttf') format('truetype');}
+* {font-family: Alibaba-PuHuiTi;}
+* html, body {height: 100%;} */
+.head {background-color: rgb(32,36,63);}
+.mdui-appbar-with-toolbar {color: rgb(32,36,63); }
+.head a {color: #FFFFFF;}
+.mdui-typo-body-2 {color: #FFFFFF;}
+.airline-list-overlay {position: absolute;top: 75px;right:20px;height: 400px;width: 300px;z-index: 10;background: rgb(240,248,255,0.7);box-shadow: 0 0 5px gray;border-radius: 8px;opacity: 0.9;}
+.airline-list-title {background: #2F4E7C;width: 100%;height: 40px;text-align: center;border-radius: 8px;}
+.airline-list-title-text {padding-left: 10px;padding-top: 5px;color: black;font-size: 26px;display: inline-block;text-align: center;}
+.airline-list-table {width: 100%;height: calc(100% - 88px);overflow-y: auto;overflow-x: hidden;}
+.display-none {display: none;}
+.info-overlay {position: absolute;top: 60px;right: 0;height: calc(100vh - 60px);width: 400px;z-index: 10;background: aliceblue;box-shadow: -3px 0 8px -4px gray;font-size: 0;}
+.info-overlay-close {color: #ffffff;position: absolute;float: right;right: 10px;top: 5px;cursor: pointer;z-index: 21;}
+.info-overlay-closing {animation: overlay-closing 500ms;animation-fill-mode: forwards;}
+.table {width: 100%;margin-bottom: 1rem;color: #212529;}
+.table .thead-light th {color: #495057;background-color: #e9ecef;border-color: rgba(0, 0, 0, .06);width: 33%;}
+.airline-list-table {width: 100%;height: calc(100% - 88px);overflow-y: auto;overflow-x: hidden;}
+.table td,.table th {padding: .75rem;vertical-align: top;border-top: 1px solid rgba(0, 0, 0, .06);width: 33%;}
+
+#info {width: 660px;min-height: 100px;padding-top: 1px;padding-bottom: 8px;overflow: hidden;position: fixed;bottom: 18px;opacity: 0.75;z-index: 10240;background-color: rgb(243, 243, 243);}
+#infova {width: 440px;min-height: 100px;padding-top: 1px;padding-bottom: 8px;overflow: hidden;position: fixed;bottom: 18px;opacity: 0.75;z-index: 10240;background-color: rgb(243, 243, 243);}
+#atcinfo {width: 150px;padding: 10px;overflow: hidden;position: fixed;bottom: 18px;opacity: 0.75;z-index: 10240;background-color: rgb(243, 243, 243);}
+
+#leaflet-container {height: 100%;}
